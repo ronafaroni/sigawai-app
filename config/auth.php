@@ -16,6 +16,7 @@ return [
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'web'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+        'login' => 'login-user', // Halaman login default
     ],
 
     /*
@@ -40,6 +41,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+            'login' => '/admin/login', // Halaman login admin
+        ]
     ],
 
     /*
@@ -62,7 +68,16 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => App\Models\User::class,
+            'username' => 'username', // pastikan ini sudah sesuai
+            'password' => 'password',
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+            'username' => 'username', // pastikan ini sudah sesuai
+            'password' => 'password',
         ],
 
         // 'users' => [
