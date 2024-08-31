@@ -28,7 +28,7 @@ class UserLoginController extends Controller
         // Validasi manual untuk mengatasi berbagai kondisi
         $messages = [];
         if (!$request->filled('username') && !$request->filled('password')) {
-            $messages['login_error'] = 'Username dan password tidak terisi.';
+            $messages['login_error'] = 'Username dan Password tidak terisi.';
         } elseif (!$request->filled('username')) {
             $messages['login_error'] = 'Username tidak boleh kosong.';
         } elseif (!$request->filled('password')) {
@@ -52,7 +52,7 @@ class UserLoginController extends Controller
 
         // Login gagal
         return redirect()->back()->withErrors([
-            'login_error' => 'Username atau password salah.',
+            'login_error' => 'Username atau Password salah.',
         ]);
     }
 
