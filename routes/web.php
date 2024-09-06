@@ -27,7 +27,6 @@ Route::post('/rekam-wajah', [KehadiranController::class, 'store']);
 Route::post('/check-location', [KehadiranController::class, 'checkLocation']);
 Route::delete('/delete-kehadiran/{id_kehadiran}', [KehadiranController::class, 'deleteKehadiran'])->name('delete-kehadiran');
 
-
 // Route::get('/', [LoginController::class, 'index'])->name('home');
 Route::get('/', [UserLoginController::class, 'userCreate'])->name('login');
 Route::post('/', [UserLoginController::class, 'userStore']);

@@ -10,8 +10,7 @@
             <td>
                 <h2 class="table-avatar">
                     <img class="avatar-img" width="40px" height="40px"
-                        src="{{ asset('wajah/' . $data->image_path) }}"
-                        alt="User Image"
+                        src="{{ asset('wajah/' . $data->image_path) }}" alt="Wajah Pegawai"
                         data-bs-toggle="modal" data-bs-target="#imageModal"
                         onclick="showImage('{{ asset('wajah/' . $data->image_path) }}')">
                 </h2>                

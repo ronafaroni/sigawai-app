@@ -84,49 +84,59 @@ class KehadiranController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi input
         $data = $request->validate([
             'image' => 'required|string',
             'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
+            'longitude' => 'required|numeric', 
         ]);
     
         try {
-            // Decode base64 image
+            // Mendekode gambar base64
             $imageData = $data['image'];
-            $imageData = str_replace('data:image/png;base64,', '', $imageData);
-            $imageData = str_replace(' ', '+', $imageData);
-            $imageName = 'wajah_' . time() . '.png';
-    
-            // Define the path where the image will be stored
+            
+            // Menghilangkan header base64 jika ada (sesuaikan dengan format yang dikirimkan)
+            if (strpos($imageData, 'data:image/jpeg;base64,') !== false) {
+                $imageData = str_replace('data:image/jpeg;base64,', '', $imageData);
+            } elseif (strpos($imageData, 'data:image/png;base64,') !== false) {
+                $imageData = str_replace('data:image/png;base64,', '', $imageData);
+            }
+            
+            $imageData = str_replace(' ', '+', $imageData); // Mengatasi spasi dalam data base64
+            $imageName = 'wajah_' . time() . '.jpg'; // Ubah format nama file
+            
+            // Tentukan path tujuan
             $destinationPath = public_path('wajah');
             $imagePath = $destinationPath . '/' . $imageName;
     
-            // Ensure the directory exists
+            // Buat direktori jika belum ada
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0755, true);
             }
     
-            // Save the image to the specified directory
+            // Simpan gambar ke path yang telah ditentukan
             file_put_contents($imagePath, base64_decode($imageData));
     
-            
-            // Save the image information to the database
+            // Simpan data kehadiran ke database
             $kehadiran = Kehadiran::create([
                 'niy' => Auth::guard('web')->user()->niy,
                 'nama_pegawai' => Auth::guard('web')->user()->name,
                 'tanggal_masuk' => now(),
-                'waktu_masuk' => Carbon::now()->format('H:i:s'),
+                'waktu_masuk' => now()->format('H:i:s'),
                 'image_path' => $imageName,
                 'latitude' => $request->latitude,
                 'longitude' => $request->longitude,
-        
             ]);
     
+            // Kembalikan response berhasil
             return response()->json(['success' => true, 'message' => 'Wajah berhasil disimpan', 'data' => $kehadiran]);
+    
         } catch (\Exception $e) {
+            // Kembalikan response error jika terjadi kesalahan
             return response()->json(['success' => false, 'error' => 'Gagal menyimpan gambar: ' . $e->getMessage()]);
         }
     }
+    
     
     public function deleteKehadiran($id_kehadiran)
     {
