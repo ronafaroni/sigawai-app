@@ -89,14 +89,16 @@
                                     </td>
                                     <td>
                                         <a data-bs-toggle="modal" 
-                                           data-bs-target="#dataAbsensiPegawai" 
-                                           class="btn btn-greys me-2"
-                                           data-niy="{{ $item->niy }}"
-                                           data-nama="{{ $item->nama_pegawai }}"
-                                           data-tanggal="{{ $item->tanggal_masuk }}"
-                                           data-waktu="{{ $item->waktu_masuk }}">
-                                           <i class="fe fe-edit me-2"></i> Edit
+                                            data-bs-target="#dataAbsensiPegawai" 
+                                            class="btn btn-greys me-2"
+                                            data-niy="{{ $item->niy }}"
+                                            data-nama="{{ $item->nama_pegawai }}"
+                                            data-tanggal="{{ $item->tanggal_masuk }}"
+                                            data-waktu="{{ $item->waktu_masuk }}"
+                                            data-id="{{ $item->id_kehadiran }}"> <!-- Tambahkan ID ke data attribute -->
+                                            <i class="fe fe-edit me-2"></i> Edit
                                         </a>
+                                     
                                     </td>
                                 </tr>
                                 </tbody>
@@ -122,7 +124,11 @@
                     <form action="{{ route('kehadiran-update', $item->id_kehadiran) }}" method="POST">
                         @csrf
                         @method('PUT') <!-- Tambahkan ini untuk menggunakan PUT method -->
-                    
+                        
+                        <div class="input-block mb-3">
+                            <label>NIY</label>
+                            <input type="text" name="id" class="form-control" readonly>
+                        </div>
                         <div class="input-block mb-3">
                             <label>NIY</label>
                             <input type="text" name="niy" class="form-control" readonly>
@@ -160,18 +166,18 @@
             const nama = button.getAttribute('data-nama');
             const tanggal = button.getAttribute('data-tanggal');
             const waktu = button.getAttribute('data-waktu');
-
+            const idKeberadaan = button.getAttribute('data-id'); // Ambil ID
+            
             // Isi modal dengan data dari button
             document.querySelector('#dataAbsensiPegawai input[name="niy"]').value = niy;
             document.querySelector('#dataAbsensiPegawai input[name="nama_pegawai"]').value = nama;
             document.querySelector('#dataAbsensiPegawai input[name="tanggal_masuk"]').value = tanggal;
-    
+            document.querySelector('#dataAbsensiPegawai input[name="waktu_masuk"]').value = waktu;
+            document.querySelector('#dataAbsensiPegawai form').action = `/kehadiran-update/${idKeberadaan}`; // Set action form
         });
     });
 });
 
 </script>
-
-
 
 @endsection
