@@ -69,7 +69,19 @@
                                         </a>
                                     </td>
                                     <td>
-                                        @if ($item->waktu_masuk > '07:00:00')
+                                        @php
+                                            // Tentukan waktu toleransi
+                                            $toleransiBoarding = '16:15:00'; // Batas waktu untuk pegawai boarding
+                                            $toleransiSD = '07:00:00'; // Batas waktu untuk pegawai SD
+                                    
+                                            // Ambil kategori pegawai
+                                            $kategoriPegawai = $item->pegawai->unit_kerja; // Misalkan ada atribut 'kategori' yang menentukan jenis pegawai
+                                    
+                                            // Tentukan waktu batas berdasarkan kategori
+                                            $waktuBatas = ($kategoriPegawai == 'Boarding Bumi Kartini') ? $toleransiBoarding : $toleransiSD;
+                                        @endphp
+                                    
+                                        @if ($item->waktu_masuk > $waktuBatas)
                                             <span class="text-danger"><b>Terlambat</b></span>
                                         @else
                                             <span class="text-success"><b>Tepat Waktu</b></span>

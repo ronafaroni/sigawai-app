@@ -47,9 +47,9 @@
                                     <th>Gambar</th>
                                     <th>NIY</th>
                                     <th>Nama Pegawai</th>
-                                    <th>Tgl. Masuk</th>    
-                                    <th>Status Kehadiran</th>   
+                                    <th>Tgl. Masuk</th>      
                                     <th>Waktu</th>
+                                    <th>Status Kehadiran</th> 
                                     <th class="no-sort">Action</th>
                                 </tr>
                             </thead>

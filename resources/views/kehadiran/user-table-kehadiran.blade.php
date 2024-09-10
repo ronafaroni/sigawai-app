@@ -19,15 +19,27 @@
             <td>{{ $data->nama_pegawai }}</td>
             <td>{{ \Carbon\Carbon::parse($data->tanggal_masuk)->locale('id')->translatedFormat('d F Y') }}</td>
             <td>{{ $data->waktu_masuk }}</td>
+
             <td>
-                <td>
-                    @if ($item->waktu_masuk > '07:00:00')
-                        <span class="text-danger"><b>Terlambat</b></span>
-                    @else
-                        <span class="text-success"><b>Tepat Waktu</b></span>
-                    @endif
-                </td>
+                @php
+                    // Tentukan waktu toleransi
+                    $toleransiBoarding = '16:15:00'; // Batas waktu untuk pegawai boarding
+                    $toleransiSD = '07:00:00'; // Batas waktu untuk pegawai SD
+            
+                    // Ambil kategori pegawai
+                    $kategoriPegawai = $data->pegawai->unit_kerja; // Misalkan ada atribut 'kategori' yang menentukan jenis pegawai
+            
+                    // Tentukan waktu batas berdasarkan kategori
+                    $waktuBatas = ($kategoriPegawai == 'Boarding Bumi Kartini') ? $toleransiBoarding : $toleransiSD;
+                @endphp
+            
+                @if ($data->waktu_masuk > $waktuBatas)
+                    <span class="text-danger"><b>Terlambat</b></span>
+                @else
+                    <span class="text-success"><b>Tepat Waktu</b></span>
+                @endif
             </td>
+            
             <td class="d-flex align-items-center"> 
                 <button data-id="{{ $data->id_kehadiran }}" class="btn btn-import me-2 delete-kehadiran"><i class="fa fa-trash me-1"></i></button>
             </td>

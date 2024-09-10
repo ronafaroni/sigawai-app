@@ -16,5 +16,10 @@ class Kehadiran extends Model
     protected $fillable = [
         'niy', 'nama_pegawai', 'tanggal_masuk', 'waktu_masuk', 'image_path', 'latitude', 'longitude'
     ];
+
+    public function pegawai()
+    {
+        return $this->belongsTo(Pegawai::class, 'niy', 'niy');
+    }
     
 }

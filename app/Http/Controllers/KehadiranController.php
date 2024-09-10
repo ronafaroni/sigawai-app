@@ -161,14 +161,16 @@ class KehadiranController extends Controller
 
     public function userAbsensiPegawai()
     {
-        $kehadiran = Kehadiran::where('niy', Auth::guard('web')->user()->niy)
+        $kehadiran = Kehadiran::with('pegawai')->where('niy', Auth::guard('web')->user()->niy)
             ->orderBy('waktu_masuk', 'desc')->get();
         return view('kehadiran.user-absensi-pegawai', compact('kehadiran'));
     }
 
     public function rekapKehadiran()
     {
-        $kehadiran = Kehadiran::all()->sortByDesc('waktu_masuk');
+        $kehadiran = Kehadiran::with('pegawai')
+        ->orderBy('waktu_masuk', 'desc') // Mengurutkan berdasarkan waktu_masuk dalam urutan menurun
+        ->get(); // Mengambil semua data
         return view('kehadiran.rekap-kehadiran', compact('kehadiran'));
     }
 
