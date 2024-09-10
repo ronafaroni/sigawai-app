@@ -47,7 +47,8 @@
                                     <th>Gambar</th>
                                     <th>NIY</th>
                                     <th>Nama Pegawai</th>
-                                    <th>Tgl. Masuk</th>       
+                                    <th>Tgl. Masuk</th>    
+                                    <th>Status Kehadiran</th>   
                                     <th>Waktu</th>
                                     <th class="no-sort">Action</th>
                                 </tr>
@@ -94,7 +95,7 @@
             </div>
         </div>
     </div>
-
+ 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {

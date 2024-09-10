@@ -41,6 +41,8 @@
                                         <th>Waktu</th>
                                         <th>Tgl. Masuk</th>
                                         <th>Titik Kordinat</th>  
+                                        <th>Status Kehadiran</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 @php
@@ -66,6 +68,24 @@
                                             {{ $item->latitude }}, {{ $item->longitude }}
                                         </a>
                                     </td>
+                                    <td>
+                                        @if ($item->waktu_masuk > '07:00:00')
+                                            <span class="text-danger"><b>Terlambat</b></span>
+                                        @else
+                                            <span class="text-success"><b>Tepat Waktu</b></span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a data-bs-toggle="modal" 
+                                           data-bs-target="#dataAbsensiPegawai" 
+                                           class="btn btn-greys me-2"
+                                           data-niy="{{ $item->niy }}"
+                                           data-nama="{{ $item->nama_pegawai }}"
+                                           data-tanggal="{{ $item->tanggal_masuk }}"
+                                           data-waktu="{{ $item->waktu_masuk }}">
+                                           <i class="fe fe-edit me-2"></i> Edit
+                                        </a>
+                                    </td>
                                 </tr>
                                 </tbody>
                                 @endforeach
@@ -75,4 +95,71 @@
                 </div>
             </div>
         </div>
+
+            <!-- Modal for Absensi -->
+    <div class="modal fade" id="dataAbsensiPegawai" tabindex="-1" role="dialog" aria-labelledby="dataInformasiLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dataInformasiLabel">Edit Absensi Pegawai</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('kehadiran-update', $item->id_kehadiran) }}" method="POST">
+                        @csrf
+                        @method('PUT') <!-- Tambahkan ini untuk menggunakan PUT method -->
+                    
+                        <div class="input-block mb-3">
+                            <label>NIY</label>
+                            <input type="text" name="niy" class="form-control" readonly>
+                        </div>
+                        <div class="input-block mb-3">
+                            <label>Nama Pegawai</label>
+                            <input type="text" name="nama_pegawai" class="form-control" readonly>
+                        </div> 
+                        <div class="input-block mb-3">
+                            <label>Tgl. Kehadiran</label>
+                            <input type="date" name="tanggal_masuk" class="form-control">
+                        </div>
+                        <div class="input-block mb-3">
+                            <label>Waktu Hadir</label>
+                            <input type="time" name="waktu_masuk" class="form-control" id="waktu_masuk">
+                        </div>             
+                    
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"><i class="fe fe-calendar me-2" aria-hidden="true"></i>Simpan Perubahan</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const editButtons = document.querySelectorAll('[data-bs-toggle="modal"][data-bs-target="#dataAbsensiPegawai"]');
+    
+    editButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            const niy = button.getAttribute('data-niy');
+            const nama = button.getAttribute('data-nama');
+            const tanggal = button.getAttribute('data-tanggal');
+            const waktu = button.getAttribute('data-waktu');
+
+            // Isi modal dengan data dari button
+            document.querySelector('#dataAbsensiPegawai input[name="niy"]').value = niy;
+            document.querySelector('#dataAbsensiPegawai input[name="nama_pegawai"]').value = nama;
+            document.querySelector('#dataAbsensiPegawai input[name="tanggal_masuk"]').value = tanggal;
+    
+        });
+    });
+});
+
+</script>
+
+
+
 @endsection

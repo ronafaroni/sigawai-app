@@ -26,6 +26,7 @@ Route::post('/absensi-kehadiran', [KehadiranController::class, 'absensiKehadiran
 Route::post('/rekam-wajah', [KehadiranController::class, 'store']);
 Route::post('/check-location', [KehadiranController::class, 'checkLocation']);
 Route::delete('/delete-kehadiran/{id_kehadiran}', [KehadiranController::class, 'deleteKehadiran'])->name('delete-kehadiran');
+Route::put('/kehadiran-update/{id_kehadiran}', [KehadiranController::class, 'kehadiranUpdate'])->name('kehadiran-update');
 
 // Route::get('/', [LoginController::class, 'index'])->name('home');
 Route::get('/', [UserLoginController::class, 'userCreate'])->name('login');
@@ -46,7 +47,6 @@ Route::post('/simpan-pegawai', [PegawaiController::class, 'simpanPegawai'])->nam
 Route::get('/edit-pegawai/{niy}', [PegawaiController::class, 'editPegawai'])->name('edit-pegawai')->middleware('auth:admin');
 Route::delete('/delete-pegawai/{id_pegawai}', [PegawaiController::class, 'deletePegawai'])->name('delete-pegawai')->middleware('auth:admin');
 Route::post('/update-pegawai/{id_pegawai}', [PegawaiController::class, 'updatePegawai'])->name('update-pegawai')->middleware('auth:admin');
-
 
 Route::post('/update-status-pegawai/{id_pegawai}', [PegawaiController::class, 'updateStatusPegawai'])->name('update-status-pegawai')->middleware('auth:admin');
 Route::get('/status-pegawai', [PegawaiController::class, 'statusPegawai'])->name('status-pegawai')->middleware('auth:admin')->middleware('auth:admin');

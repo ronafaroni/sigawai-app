@@ -172,6 +172,29 @@ class KehadiranController extends Controller
         return view('kehadiran.rekap-kehadiran', compact('kehadiran'));
     }
 
+    public function kehadiranUpdate(Request $request, $id_kehadiran)
+    {
+        // Validasi input
+        $request->validate([
+            'tanggal_masuk' => 'required|date',
+            'waktu_masuk' => 'required',
+        ]);
+
+        // Ambil data kehadiran berdasarkan ID
+        $hadir = Kehadiran::find($id_kehadiran);
+
+        // Update data kehadiran
+        $hadir->update([
+            'tanggal_masuk' => $request->tanggal_masuk,
+            'waktu_masuk' => $request->waktu_masuk,
+        ]);
+        
+        // Set session success message
+        session()->flash('update', 'Data Kehadiran Berhasil diperbarui');
+        
+        // Redirect ke halaman rekap kehadiran
+        return redirect('/rekap-kehadiran');
+    }
 
 }
 
