@@ -62,7 +62,9 @@
                                     <td>{{ $item->niy }}</td>
                                     <td>{{ $item->nama_pegawai }}</td>
                                     <td>{{ $item->waktu_masuk }}</td>
-                                    <td>{{ $item->tanggal_masuk }}</td>
+                                    <td><!-- Menampilkan tanggal dengan format Indonesia -->
+                                        {{ \Carbon\Carbon::parse($tanggal_masuk)->locale('id')->translatedFormat('d F Y') }}
+                                    </td>
                                     <td>
                                         <a href="https://www.google.com/maps?q={{ $item->latitude }},{{ $item->longitude }}" target="_blank">
                                             {{ $item->latitude }}, {{ $item->longitude }}
