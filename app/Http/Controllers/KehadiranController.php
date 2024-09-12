@@ -197,5 +197,14 @@ class KehadiranController extends Controller
         return redirect('/rekap-kehadiran');
     }    
 
+    public function resetKehadiran()
+    {
+        Kehadiran::truncate(); //Hapus semua data dalam tabel kehadiran
+
+        session()->flash('delete', 'Data Kehadiran Berhasil direset.');
+        
+        return redirect('/rekap-kehadiran');
+    }
+
 }
 

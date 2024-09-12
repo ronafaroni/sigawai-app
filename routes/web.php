@@ -22,11 +22,12 @@ Route::get('/scan-barcode', function () {
     return view('scan-barcode');
 });
 
-Route::post('/absensi-kehadiran', [KehadiranController::class, 'absensiKehadiran'])->name('absensi-kehadiran');
+Route::post('/absensi-kehadiran', [KehadiranController::class, 'absensiKehadiran'])->name('absensi-kehadiran')->middleware('auth:web');
 Route::post('/rekam-wajah', [KehadiranController::class, 'store']);
 Route::post('/check-location', [KehadiranController::class, 'checkLocation']);
 Route::delete('/delete-kehadiran/{id_kehadiran}', [KehadiranController::class, 'deleteKehadiran'])->name('delete-kehadiran');
 Route::put('/kehadiran-update/{id_kehadiran}', [KehadiranController::class, 'kehadiranUpdate'])->name('kehadiran-update');
+Route::delete('/reset-kehadiran', [KehadiranController::class, 'resetKehadiran'])->name('reset-kehadiran');
 
 // Route::get('/', [LoginController::class, 'index'])->name('home');
 Route::get('/', [UserLoginController::class, 'userCreate'])->name('login');

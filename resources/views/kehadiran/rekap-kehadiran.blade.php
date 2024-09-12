@@ -1,13 +1,26 @@
 @extends('template-admin.index')
 
 @section('content-admin')
-        <!-- Page Header -->
-        <div class="page-header">
-            <div class="content-page-header">
-                <h5>Rekap Kehadiran</h5>
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="content-page-header">
+            <h5>Rekap Kehadiran</h5>
+            <div class="list-btn">
+                <ul class="filter-list">
+                    <li>
+                        <form action="{{ route('reset-kehadiran') }}" method="POST" onsubmit="return confirm('Apakah anda yakin ingin mereset absensi Kehadiran ?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa fa-refresh me-2"></i>Reset Semua Absensi
+                            </button>
+                        </form>
+                    </li>
+                </ul>
             </div>
         </div>
-        <!-- /Page Header -->
+    </div>
+    <!-- /Page Header -->
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-table">
@@ -55,15 +68,16 @@
                                     <td>
                                         <h2 class="table-avatar">
                                             <img class="avatar-img" width="40px" height="40px"
-                                                src="{{ asset('wajah/' . $item->image_path) }}"
-                                                alt="User Image">
-                                        </h2>
-                                    </td>
+                                                src="{{ asset('wajah/' . $item->image_path) }}" alt="Wajah Pegawai"
+                                                data-bs-toggle="modal" data-bs-target="#imageModal"
+                                                onclick="showImage('{{ asset('wajah/' . $item->image_path) }}')">
+                                        </h2>  
+                                    </td> 
                                     <td>{{ $item->niy }}</td>
                                     <td>{{ $item->nama_pegawai }}</td>
                                     <td>{{ $item->waktu_masuk }}</td>
                                     <td><!-- Menampilkan tanggal dengan format Indonesia -->
-                                        {{ \Carbon\Carbon::parse($tanggal_masuk)->locale('id')->translatedFormat('d F Y') }}
+                                        {{ \Carbon\Carbon::parse($item->tanggal_masuk)->locale('id')->translatedFormat('d F Y') }}
                                     </td>
                                     <td>
                                         <a href="https://www.google.com/maps?q={{ $item->latitude }},{{ $item->longitude }}" target="_blank">
@@ -123,7 +137,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('kehadiran-update', $item->id_kehadiran) }}" method="POST">
+                    <form action="{{ route('kehadiran-update', $item->id_kehadiran ?? 0) }}" method="POST">
                         @csrf
                         @method('PUT') <!-- Tambahkan ini untuk menggunakan PUT method -->
                         
@@ -180,6 +194,27 @@
     });
 });
 
+</script>
+
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Gambar Pegawai</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" class="img-fluid" alt="User Image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showImage(imageSrc) {
+        document.getElementById('modalImage').src = imageSrc;
+    }
 </script>
 
 @endsection
