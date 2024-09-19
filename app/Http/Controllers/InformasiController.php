@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Informasi;
 use Illuminate\Support\Facades\Storage;
 
-class InformasiController extends Controller
+class InformasiController extends Controller 
 {
     public function daftarInformasi()
     {
@@ -103,6 +103,20 @@ class InformasiController extends Controller
 
         // Mendownload file
         return response()->download($filePath);
+    }
+
+    public function userOpenFile($file_informasi)
+    {
+        // Misalkan PDF yang ingin kamu tampilkan berasal dari resource atau memory.
+        // Kamu bisa mendapatkan file dari sumber lain seperti storage, external API, dll.
+        $filePath = file_get_contents('uploads/informasi/' . $file_informasi);
+        // Mengambil PDF dari URL eksternal, bisa juga dari local storage atau hasil generate PDF.
+
+        // Header untuk memastikan file di-stream langsung ke browser tanpa download
+        return response($filePath)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="informasi.pdf"');
+
     }
 
 }

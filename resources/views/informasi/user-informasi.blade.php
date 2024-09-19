@@ -60,6 +60,9 @@
                                                                     <a href="{{ route('user-download-informasi', $data->file_informasi) }}" class="btn btn-greys me-2">
                                                                         <i class="fe fe-download me-2"></i> Download File
                                                                     </a>
+                                                                    <a href="{{ route('user-open-file', $data->file_informasi) }}" class="btn btn-greys me-2" target="_blank">
+                                                                        <i class="fe fe-download me-2"></i> Open File
+                                                                    </a>
                                                                 @elseif ($data->jenis_informasi == 'Link')
                                                                     <a href="{{ $data->link_informasi }}" class="btn btn-greys me-2" target="_blank">
                                                                         <i class="fe fe-link me-2"></i> Link Informasi
@@ -106,6 +109,9 @@
                                                                     <a href="{{ route('user-download-informasi', $data->file_informasi) }}" class="btn btn-greys me-2">
                                                                         <i class="fe fe-download me-2"></i> Download File
                                                                     </a>
+                                                                    <a href="{{ route('user-open-file', $data->file_informasi) }}" class="btn btn-greys me-2" target="_blank">
+                                                                        <i class="fe fe-eye me-2"></i> Open File
+                                                                    </a>
                                                                 @elseif ($data->jenis_informasi == 'Link')
                                                                     <a href="{{ $data->link_informasi }}" class="btn btn-greys me-2" target="_blank">
                                                                         <i class="fe fe-link me-2"></i> Link Informasi
@@ -130,5 +136,6 @@
         </div>
     </div>
 </div>
+
 
 @endsection

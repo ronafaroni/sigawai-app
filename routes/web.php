@@ -122,6 +122,8 @@ Route::get('/user-status-pegawai', [PegawaiController::class, 'userStatusPegawai
 Route::get('/user-akun', [AkunController::class, 'userAkun'])->name('user-akun')->middleware('auth:web');
 Route::post('/user-update-akun/{id_users}', [AkunController::class, 'userUpdateAkun'])->name('user-update-akun')->middleware('auth:web');
 Route::get('/user-download-informasi/{file_informasi}', [InformasiController::class, 'userDownloadInformasi'])->name('user-download-informasi')->middleware('auth:web');
+Route::get('user-open-file/{file_informasi}', [InformasiController::class, 'userOpenFile'])->name('user-open-file')->middleware('auth:web');
+
 Route::get('/user-slip-penggajian', [PenggajianController::class, 'userSlipPenggajian'])->name('user-slip-penggajian')->middleware('auth:web');
 Route::get('/get-user-months/{year}', [PenggajianController::class, 'getUserMonths']);
 Route::get('/hasil-cari-user-slip-penggajian', [PenggajianController::class, 'hasilCariUserSlipPenggajian'])->name('hasil-cari-user-slip-penggajian')->middleware('auth:web');
