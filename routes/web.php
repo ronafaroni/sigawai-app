@@ -77,7 +77,7 @@ Route::get('/daftar-penggajian', [PenggajianController::class, 'daftarPenggajian
 Route::get('/edit-penggajian/{id_pegawai}', [PenggajianController::class, 'editPenggajian'])->name('edit-penggajian')->middleware('auth:admin');
 Route::post('/update-penggajian/{id_pegawai}', [PenggajianController::class, 'updatePenggajian'])->name('update-penggajian')->middleware('auth:admin');
 Route::post('/import-penggajian', [PenggajianController::class, 'importPenggajian'])->name('import-penggajian')->middleware('auth:admin');
-Route::get('/download-template-penggajian', [PenggajianController::class, 'downloadTemplatePenggajian'])->name('download-template-penggajian')->middleware('auth:admin');
+Route::get('/download-file-penggajian', [PenggajianController::class, 'downloadFilePenggajian'])->name('download-file-penggajian')->middleware('auth:admin');
 
 Route::delete('/delete-penggajian/{id_gaji}', [PenggajianController::class, 'deletePenggajian'])->name('delete-penggajian')->middleware('auth:admin');
 Route::get('/slip-penggajian', [PenggajianController::class, 'slipPenggajian'])->name('slip-penggajian')->middleware('auth:admin');
@@ -106,7 +106,7 @@ Route::post('/simpan-informasi', [InformasiController::class, 'simpanInformasi']
 Route::delete('/delete-informasi/{id_informasi}', [InformasiController::class, 'deleteInformasi'])->name('delete-informasi')->middleware('auth:admin');
 Route::get('/download-informasi/{file_informasi}', [InformasiController::class, 'downloadInformasi'])->name('download-informasi')->middleware('auth:admin');
 
-Route::get('/rekap-kehadiran',[KehadiranController::class, 'rekapKehadiran'])->name('rekap-kehadiran')->middleware('auth:admin');
+Route::get('/rekap-kehadiran', [KehadiranController::class, 'rekapKehadiran'])->name('rekap-kehadiran')->middleware('auth:admin');
 
 
 
