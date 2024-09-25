@@ -20,29 +20,30 @@ class DashboardController extends Controller
     {
         $pegawai = Pegawai::count();
         $unit_kerja = Pegawai::select('unit_kerja')->distinct()->count('unit_kerja');
+        $tetap_yayasan = Pegawai::where('status_kerja', 'Pegawai Tetap Yayasan')->count();
         $tetap = Pegawai::where('status_kerja', 'Pegawai Tetap')->count();
         $tidak_tetap = Pegawai::where('status_kerja', 'Pegawai Tidak Tetap')->count();
-        return view('dashboard.admin-dashboard', compact('pegawai','unit_kerja','tetap','tidak_tetap'));
+        return view('dashboard.admin-dashboard', compact('pegawai', 'unit_kerja', 'tetap_yayasan', 'tetap', 'tidak_tetap'));
     }
 
     public function userDashboard()
-{
-    $penggajian = Penggajian::where('niy', Auth::guard('web')->user()->niy)
-        ->orderBy('created_at', 'desc')
-        ->first();
+    {
+        $penggajian = Penggajian::where('niy', Auth::guard('web')->user()->niy)
+            ->orderBy('created_at', 'desc')
+            ->first();
 
-    // Retrieve and aggregate attendance data by month
-    $attendanceData = Penggajian::where('niy', Auth::guard('web')->user()->niy)
-        ->select('bln_gaji', 'satuan_potongan_transport')
-        ->orderBy('bln_gaji', 'asc')
-        ->get();
+        // Retrieve and aggregate attendance data by month
+        $attendanceData = Penggajian::where('niy', Auth::guard('web')->user()->niy)
+            ->select('bln_gaji', 'satuan_potongan_transport')
+            ->orderBy('bln_gaji', 'asc')
+            ->get();
 
-    // Format data for ApexCharts
-    $labels = $attendanceData->pluck('bln_gaji');
-    $data = $attendanceData->pluck('satuan_potongan_transport');
+        // Format data for ApexCharts
+        $labels = $attendanceData->pluck('bln_gaji');
+        $data = $attendanceData->pluck('satuan_potongan_transport');
 
-    return view('dashboard.user-dashboard', compact('penggajian', 'labels', 'data'));
-}
+        return view('dashboard.user-dashboard', compact('penggajian', 'labels', 'data'));
+    }
 
 
 }
